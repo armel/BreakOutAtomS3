@@ -2,13 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full
 // license information.
 
-#define BRICK_NUMBER 24
-
 #include <M5Unified.h>
 #include "font.h"
 #include "Unit_Encoder.h"
 
 Unit_Encoder sensor;
+M5GFX &display(M5.Lcd);
 
 #include "BreakOut.h"
 
@@ -42,10 +41,10 @@ void setup() {
     sensor.begin();
     encoderCurrent = sensor.getEncoderValue();
 
-    // M5Stack Lcd
-    M5.Lcd.begin();
-    M5.Lcd.setBrightness(64);
-    M5.Lcd.clear();
+    // AtomS3 Lcd
+    display.begin();
+    display.setBrightness(64);
+    display.clear();
 
     // Let's go
     drawPanel();
@@ -67,10 +66,10 @@ void loop() {
     btn = sensor.getButtonStatus();
 
     if (btn == false) {
-        M5.Lcd.setFont(&YELLOWCRE8pt7b);
-        M5.Lcd.setTextDatum(CC_DATUM);
-        M5.Lcd.setTextColor(TFT_WHITE, TFT_BLACK);
-        M5.Lcd.drawString("PAUSE", 64, 64);
+        display.setFont(&YELLOWCRE8pt7b);
+        display.setTextDatum(CC_DATUM);
+        display.setTextColor(TFT_WHITE, TFT_BLACK);
+        display.drawString("PAUSE", 64, 64);
 
         delay(500);
         while(true)
@@ -79,7 +78,7 @@ void loop() {
             if(btn == false) 
             {
                 delay(500);
-                M5.Lcd.fillRect(24, 53, 80, 20, TFT_BLACK);
+                display.fillRect(24, 53, 80, 20, TFT_BLACK);
                 drawBall();
                 break;
             }
@@ -110,10 +109,10 @@ void loop() {
         scoreOld = score;
         sensor.setLEDColor(0, 0x001100);
         sensor.setLEDColor(1, 0x001100);
-        M5.Lcd.setFont(&YELLOWCRE8pt7b);
-        M5.Lcd.setTextDatum(CC_DATUM);
-        M5.Lcd.setTextColor(TFT_BLACK, TFT_DARKGRAY);
-        M5.Lcd.drawString(String(score), 32, 119);
+        display.setFont(&YELLOWCRE8pt7b);
+        display.setTextDatum(CC_DATUM);
+        display.setTextColor(TFT_BLACK, TFT_DARKGRAY);
+        display.drawString(String(score), 32, 119);
         delay(25);
     } else {
         delay(25);

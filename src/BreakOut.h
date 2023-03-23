@@ -2,11 +2,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full
 // license information.
 
+#define BRICK_NUMBER 24
+#define BALL_NUMBER 5
+
 uint16_t palette[] = {TFT_BLUE, TFT_DARKGREEN, TFT_PINK, TFT_RED, TFT_ORANGE, TFT_MAROON, TFT_PURPLE, TFT_NAVY};
 
 int16_t encoderCurrent;
 uint16_t score     = 0;
-int8_t ballCount   = 5;
+int8_t ballCount   = BALL_NUMBER;
 uint8_t levelCount = 1;
 
 struct Brick {
@@ -42,26 +45,26 @@ Ball ball;
 
 // Draw panel
 void drawPanel() {
-    M5.Lcd.fillRect(0, 100, 128, 28, TFT_DARKGRAY);
-    M5.Lcd.setTextColor(TFT_BLACK, TFT_DARKGRAY);
+    display.fillRect(0, 100, 128, 28, TFT_DARKGRAY);
+    display.setTextColor(TFT_BLACK, TFT_DARKGRAY);
 
-    M5.Lcd.setFont(0);
-    M5.Lcd.setTextDatum(CC_DATUM);
-    M5.Lcd.drawString("Score", 32, 106);
+    display.setFont(0);
+    display.setTextDatum(CC_DATUM);
+    display.drawString("Score", 32, 106);
 
-    M5.Lcd.setFont(&YELLOWCRE8pt7b);
-    M5.Lcd.setTextDatum(CC_DATUM);
-    M5.Lcd.drawString(String(score), 32, 119);
+    display.setFont(&YELLOWCRE8pt7b);
+    display.setTextDatum(CC_DATUM);
+    display.drawString(String(score), 32, 119);
 
-    M5.Lcd.setFont(0);
-    M5.Lcd.setTextDatum(CL_DATUM);
-    M5.Lcd.drawString("Ball", 76, 106);
-    M5.Lcd.drawString("Level", 76, 120);
+    display.setFont(0);
+    display.setTextDatum(CL_DATUM);
+    display.drawString("Ball", 76, 106);
+    display.drawString("Level", 76, 120);
 
-    M5.Lcd.setFont(0);
-    M5.Lcd.setTextDatum(CR_DATUM);
-    M5.Lcd.drawString(String(ballCount), 126, 106);
-    M5.Lcd.drawString(String(levelCount), 126, 120);
+    display.setFont(0);
+    display.setTextDatum(CR_DATUM);
+    display.drawString(String(ballCount), 126, 106);
+    display.drawString(String(levelCount), 126, 120);
 }
 
 // Init wall
@@ -105,7 +108,7 @@ void drawWall() {
                     map(brick[i].x + brick[i].w - ball.x, 0, brick[i].w, 2, -2);
                 ball.dy *= -1;
 
-                M5.Lcd.fillRect(brick[i].x, brick[i].y, brick[i].w, brick[i].h,
+                display.fillRect(brick[i].x, brick[i].y, brick[i].w, brick[i].h,
                                 TFT_BLACK);
                 
                 if(score % 24 == 0)
@@ -120,9 +123,9 @@ void drawWall() {
             }
 
             if (brick[i].destroy == false) {
-                M5.Lcd.drawRoundRect(brick[i].x, brick[i].y, brick[i].w,
+                display.drawRoundRect(brick[i].x, brick[i].y, brick[i].w,
                                      brick[i].h, 2, TFT_DARKGRAY);
-                M5.Lcd.fillRect(brick[i].x + 1, brick[i].y + 1, brick[i].w - 2,
+                display.fillRect(brick[i].x + 1, brick[i].y + 1, brick[i].w - 2,
                                 brick[i].h - 2, brick[i].color);
             }
         }
@@ -137,16 +140,16 @@ void initBat() {
     bat.h = 2;
     bat.p = bat.x;
 
-    M5.Lcd.drawRect(0, bat.y, 128, bat.h, TFT_BLACK);
-    M5.Lcd.drawRect(bat.x, bat.y, bat.w, bat.h, TFT_WHITE);
+    display.drawRect(0, bat.y, 128, bat.h, TFT_BLACK);
+    display.drawRect(bat.x, bat.y, bat.w, bat.h, TFT_WHITE);
 }
 
 // Draw bat
 void drawBat() {
     if (bat.p != bat.x) {
-        M5.Lcd.drawRect(bat.p, bat.y, bat.w, bat.h, TFT_BLACK);
+        display.drawRect(bat.p, bat.y, bat.w, bat.h, TFT_BLACK);
         bat.p = bat.x;
-        M5.Lcd.drawRect(bat.x, bat.y, bat.w, bat.h, TFT_WHITE);
+        display.drawRect(bat.x, bat.y, bat.w, bat.h, TFT_WHITE);
     }
 }
 
@@ -160,7 +163,7 @@ void initBall() {
     ball.dx = 0;
     ball.dy = 1;
 
-    M5.Lcd.fillCircle(ball.x, ball.y, ball.w, TFT_WHITE);
+    display.fillCircle(ball.x, ball.y, ball.w, TFT_WHITE);
 
     while (btn == true) {
         btn = sensor.getButtonStatus();
@@ -171,7 +174,7 @@ void initBall() {
 
 // Draw ball
 void drawBall() {
-    M5.Lcd.fillCircle(ball.x, ball.y, ball.w, TFT_BLACK);
+    display.fillCircle(ball.x, ball.y, ball.w, TFT_BLACK);
 
     ball.x += ball.dx;
     ball.y += ball.dy;
@@ -200,22 +203,22 @@ void drawBall() {
         } else {
             ballCount--;
             if (ballCount < 0) {
-                ballCount  = 3;
+                ballCount  = BALL_NUMBER;
                 levelCount = 1;
                 score      = 0;
 
-                M5.Lcd.setTextColor(TFT_WHITE);
+                display.setTextColor(TFT_WHITE);
 
-                M5.Lcd.setFont(&YELLOWCRE8pt7b);
-                M5.Lcd.setTextDatum(CC_DATUM);
-                M5.Lcd.drawString("GAME OVER", 64, 70);
+                display.setFont(&YELLOWCRE8pt7b);
+                display.setTextDatum(CC_DATUM);
+                display.drawString("GAME OVER", 64, 70);
 
                 bool btn = true;
                 while (btn == true) {
                     btn = sensor.getButtonStatus();
                     delay(100);
                 }
-                M5.Lcd.clear();
+                display.clear();
                 initWall();
                 drawWall();
             }
@@ -226,5 +229,5 @@ void drawBall() {
         }
     }
 
-    M5.Lcd.fillCircle(ball.x, ball.y, ball.w, TFT_WHITE);
+    display.fillCircle(ball.x, ball.y, ball.w, TFT_WHITE);
 }
