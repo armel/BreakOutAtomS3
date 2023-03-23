@@ -3,9 +3,10 @@
 // license information.
 
 #define BRICK_NUMBER 24
-#define BALL_NUMBER 5
+#define BALL_NUMBER  5
 
-uint16_t palette[] = {TFT_BLUE, TFT_DARKGREEN, TFT_PINK, TFT_RED, TFT_ORANGE, TFT_MAROON, TFT_PURPLE, TFT_NAVY};
+uint16_t palette[] = {TFT_BLUE,   TFT_DARKGREEN, TFT_PINK,   TFT_RED,
+                      TFT_ORANGE, TFT_MAROON,    TFT_PURPLE, TFT_NAVY};
 
 int16_t encoderCurrent;
 uint16_t score     = 0;
@@ -13,12 +14,12 @@ int8_t ballCount   = BALL_NUMBER;
 uint8_t levelCount = 1;
 
 struct Brick {
-    uint8_t x;        // x
-    uint8_t y;        // y
-    uint8_t w;        // width
-    uint8_t h;        // height
-    uint16_t color;   // color
-    bool destroy;  // active, if true, check this button, else bypass
+    uint8_t x;       // x
+    uint8_t y;       // y
+    uint8_t w;       // width
+    uint8_t h;       // height
+    uint16_t color;  // color
+    bool destroy;    // active, if true, check this button, else bypass
 };
 
 Brick brick[BRICK_NUMBER];
@@ -73,7 +74,7 @@ void initWall() {
     uint8_t i      = 0;
     uint8_t j      = 0;
     uint8_t k      = 0;
-    uint8_t index = 0;
+    uint8_t index  = 0;
 
     for (i = 0; i < BRICK_NUMBER; i++) {
         if (i % 6 == 0) {
@@ -82,11 +83,11 @@ void initWall() {
             index = rand() % 8;
         }
 
-        brick[i].x = offset + (20 * j);
-        brick[i].y = -10 + 10 * k;
-        brick[i].w = 15;
-        brick[i].h = 8;
-        brick[i].color = palette[index];
+        brick[i].x       = offset + (20 * j);
+        brick[i].y       = -10 + 10 * k;
+        brick[i].w       = 15;
+        brick[i].h       = 8;
+        brick[i].color   = palette[index];
         brick[i].destroy = false;
 
         j++;
@@ -99,7 +100,8 @@ void drawWall() {
 
     for (i = 0; i < BRICK_NUMBER; i++) {
         if (brick[i].destroy == false) {
-            if ((ball.x + 1 >= brick[i].x && ball.x - 1 <= brick[i].x + brick[i].w) &&
+            if ((ball.x + 1 >= brick[i].x &&
+                 ball.x - 1 <= brick[i].x + brick[i].w) &&
                 ((ball.y >= brick[i].y && ball.y <= brick[i].y + brick[i].h))) {
                 brick[i].destroy = true;
                 score++;
@@ -109,10 +111,9 @@ void drawWall() {
                 ball.dy *= -1;
 
                 display.fillRect(brick[i].x, brick[i].y, brick[i].w, brick[i].h,
-                                TFT_BLACK);
-                
-                if(score % 24 == 0)
-                {
+                                 TFT_BLACK);
+
+                if (score % 24 == 0) {
                     levelCount++;
                     ballCount++;
                     initWall();
@@ -124,9 +125,9 @@ void drawWall() {
 
             if (brick[i].destroy == false) {
                 display.drawRoundRect(brick[i].x, brick[i].y, brick[i].w,
-                                     brick[i].h, 2, TFT_DARKGRAY);
+                                      brick[i].h, 2, TFT_DARKGRAY);
                 display.fillRect(brick[i].x + 1, brick[i].y + 1, brick[i].w - 2,
-                                brick[i].h - 2, brick[i].color);
+                                 brick[i].h - 2, brick[i].color);
             }
         }
     }

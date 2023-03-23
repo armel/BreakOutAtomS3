@@ -72,11 +72,9 @@ void loop() {
         display.drawString("PAUSE", 64, 64);
 
         delay(500);
-        while(true)
-        {
+        while (true) {
             btn = sensor.getButtonStatus();
-            if(btn == false) 
-            {
+            if (btn == false) {
                 delay(500);
                 display.fillRect(24, 53, 80, 20, TFT_BLACK);
                 drawBall();
