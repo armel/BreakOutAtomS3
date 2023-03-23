@@ -89,7 +89,7 @@ void drawWall() {
 
     for (i = 0; i < BRICK_NUMBER; i++) {
         if (brick[i].destroy == false) {
-            if ((ball.x >= brick[i].x && ball.x <= brick[i].x + brick[i].w) &&
+            if ((ball.x + 1 >= brick[i].x && ball.x - 1 <= brick[i].x + brick[i].w) &&
                 ((ball.y >= brick[i].y && ball.y <= brick[i].y + brick[i].h))) {
                 brick[i].destroy = true;
                 score++;
@@ -185,7 +185,7 @@ void drawBall() {
     }
 
     if (ball.y == 87) {
-        if (ball.x >= bat.x && ball.x <= bat.x + bat.w) {
+        if (ball.x + 1 >= bat.x && ball.x - 1 <= bat.x + bat.w) {
             ball.dx = map(bat.x + bat.w - ball.x, 0, bat.w, 3, -3);
             ball.dy *= -1;
 
