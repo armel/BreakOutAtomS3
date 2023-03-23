@@ -5,19 +5,11 @@
 #define BRICK_NUMBER 24
 
 #include <M5Unified.h>
-
-uint16_t palette[] = {TFT_BLUE, TFT_DARKGREEN, TFT_PINK, TFT_RED, TFT_ORANGE, TFT_MAROON, TFT_PURPLE, TFT_NAVY};
-
-int16_t encoderCurrent;
-uint16_t score     = 0;
-int8_t ballCount   = 5;
-uint8_t levelCount = 1;
-
+#include "font.h"
 #include "Unit_Encoder.h"
 
 Unit_Encoder sensor;
 
-#include "font.h"
 #include "BreakOut.h"
 
 void setup() {
