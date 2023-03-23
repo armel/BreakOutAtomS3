@@ -82,12 +82,13 @@ void loop() {
     // Update score
     if (scoreOld != score) {
         scoreOld = score;
-        sensor.setLEDColor(0, 0x000011);
-        sensor.setLEDColor(1, 0x000011);
+        sensor.setLEDColor(0, 0x001100);
+        sensor.setLEDColor(1, 0x001100);
         M5.Lcd.setFont(&YELLOWCRE8pt7b);
         M5.Lcd.setTextDatum(CC_DATUM);
         M5.Lcd.setTextColor(TFT_BLACK, TFT_DARKGRAY);
         M5.Lcd.drawString(String(score), 32, 119);
+        delay(25);
     } else {
         delay(25);
     }
