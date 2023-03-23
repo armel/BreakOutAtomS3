@@ -8,7 +8,7 @@ struct Brick {
     uint8_t w;        // width
     uint8_t h;        // height
     uint16_t color;   // color
-    boolean destroy;  // active, if true, check this button, else bypass
+    bool destroy;  // active, if true, check this button, else bypass
 };
 
 Brick brick[BRICK_NUMBER];
@@ -145,7 +145,7 @@ void drawBat() {
 
 // Init ball
 void initBall() {
-    boolean btn = true;
+    bool btn = true;
 
     ball.x  = (M5.Displays(0).width() / 2) - 1;
     ball.y  = (M5.Displays(0).width() / 2) - 1;
@@ -202,7 +202,7 @@ void drawBall() {
                 M5.Lcd.setTextDatum(CC_DATUM);
                 M5.Lcd.drawString("GAME OVER", 64, 70);
 
-                boolean btn = true;
+                bool btn = true;
                 while (btn == true) {
                     btn = sensor.getButtonStatus();
                     delay(100);
