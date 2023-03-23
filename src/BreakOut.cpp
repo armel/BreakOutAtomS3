@@ -58,8 +58,34 @@ void setup() {
 }
 
 void loop() {
+    bool btn;
+
     static int16_t encoderOld = encoderCurrent;
     static uint16_t scoreOld  = score;
+
+    // Manage pause
+    btn = sensor.getButtonStatus();
+
+    if (btn == false) {
+        M5.Lcd.setFont(&YELLOWCRE8pt7b);
+        M5.Lcd.setTextDatum(CC_DATUM);
+        M5.Lcd.setTextColor(TFT_WHITE, TFT_BLACK);
+        M5.Lcd.drawString("PAUSE", 64, 64);
+
+        delay(500);
+        while(true)
+        {
+            btn = sensor.getButtonStatus();
+            if(btn == false) 
+            {
+                delay(500);
+                M5.Lcd.fillRect(24, 53, 80, 20, TFT_BLACK);
+                drawBall();
+                break;
+            }
+            delay(100);
+        }
+    }
 
     // Get Encoder value
     encoderCurrent = sensor.getEncoderValue();

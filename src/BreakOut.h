@@ -166,6 +166,7 @@ void initBall() {
         btn = sensor.getButtonStatus();
         delay(100);
     }
+    delay(100);
 }
 
 // Draw ball
