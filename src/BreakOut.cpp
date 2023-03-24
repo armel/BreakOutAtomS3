@@ -2,14 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full
 // license information.
 
-#include <M5Unified.h>
-#include "font.h"
-#include "Unit_Encoder.h"
-
-Unit_Encoder sensor;
-M5GFX &display(M5.Lcd);
-
 #include "BreakOut.h"
+#include "functions.h"
 
 void setup() {
     // Init M5
@@ -46,6 +40,10 @@ void setup() {
     display.setBrightness(64);
     display.clear();
 
+    // Init scroll
+    pos = 128;
+    img.createSprite(pos, 10);
+
     // Let's go
     drawPanel();
 
@@ -53,7 +51,10 @@ void setup() {
     drawWall();
 
     initBat();
-    initBall();
+    initBall(true);
+
+    // Init Random
+    esp_random();
 }
 
 void loop() {
@@ -73,14 +74,15 @@ void loop() {
 
         delay(500);
         while (true) {
+            scroll();
             btn = sensor.getButtonStatus();
             if (btn == false) {
                 delay(500);
-                display.fillRect(24, 53, 80, 20, TFT_BLACK);
+                display.fillRect(0, 42, 128, 40, TFT_BLACK);
                 drawBall();
                 break;
             }
-            delay(100);
+            delay(50);
         }
     }
 
@@ -111,9 +113,9 @@ void loop() {
         display.setTextDatum(CC_DATUM);
         display.setTextColor(TFT_BLACK, TFT_DARKGRAY);
         display.drawString(String(score), 32, 119);
-        delay(25);
+        doPause();
     } else {
-        delay(25);
+        doPause();
     }
 
     sensor.setLEDColor(0, 0x000000);

@@ -1,4 +1,4 @@
-#include "Unit_Encoder.h"
+#include "UnitEncoder.h"
 
 /*! @brief Initialize the Encoder. */
 void Unit_Encoder::begin(TwoWire *wire, uint8_t addr, uint8_t sda, uint8_t scl,
