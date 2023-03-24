@@ -11,7 +11,13 @@
 ![version](https://img.shields.io/github/v/release/armel/AtomS3BreakOut)
 ![activity](https://img.shields.io/github/commit-activity/y/armel/AtomS3BreakOut)
 
-M5Stack AtomS3BreakOut demo
+M5Stack AtomS3BreakOut demo.
+
+# Usage
+
+This tiny BreakOut works on AtomS3 and use a simple Encoder Unit as pad.
+Clic on Encoder Unit button to start or pause game.
+Enjoy and have fun.
 
 
 # Donations
